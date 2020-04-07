@@ -17,9 +17,9 @@ re_stop = 1.0
 im_start = -1.5
 im_stop = 1.5
 
-Iter_max = 100
+iter_max = 100
 
-Tolerance = 2
+tolerance = 2
 p_re = 1000
 p_im = 1000
 
@@ -41,36 +41,38 @@ def _f(d):
     print(" _f argument: {:2d}, process id: {:7d} ".format(d, pid))
     return pid
 
-def iota(Tolerance,Iter_max, c):
+def iota(tolerance,iter_max, c):
     z=0+0j
-    for i in range(1,Iter_max):
+    for i in range(1,iter_max):
         z=z**2 + c
-        if abs(z)>Tolerance:
+        if abs(z)>tolerance:
             return i
-    return Iter_max
+    return iter_max
 
-def iota_vec(Tolerance, Iter_max, c_vec):
-    return np.array([iota(Tolerance, Iter_max, c) for c in c_vec])
+def iota_vec(tolerance, iter_max, c_vec):
+    return np.array([iota(tolerance, iter_max, c) for c in c_vec])
         
-def M_map(Iter, Iter_max):
-    return Iter/Iter_max
+def M_map(Iter, iter_max):
+    return Iter/iter_max
 
 C=C_mesh(re_start,re_stop,im_start,im_stop,p_re,p_im)
 
 
 
 if __name__ == '__main__':
+    t_start = time.time()
     pool = mp.Pool(processes=cpu_count)
-    #iota_partial = partial(iota, Tolerance, Iter_max)
+    #iota_partial = partial(iota, tolerance, iter_max)
     #result = pool.map_async(iota_partial, C.flatten())
-    iota_partial = partial(iota_vec, Tolerance, Iter_max)
+    iota_partial = partial(iota_vec, tolerance, iter_max)
     result = pool.map_async(iota_partial, C)
     pool.close()
     pool.join()
     #M = np.reshape(result.get(), (p_re, p_im))
     M = result.get()
+    time_taken = time.time() - t_start
 
-profile.print_stats()
+
         
        
 #Plot mandelbrot_set

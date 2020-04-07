@@ -1,0 +1,17 @@
+ipdb> !runfile('/home/dvd/tmp/MandelbrotMiniprojekt/Mandlebrot_naiv.py', wdir='/home/dvd/tmp/MandelbrotMiniprojekt')
+**********************************************************************
+File "/home/dvd/tmp/MandelbrotMiniprojekt/Mandlebrot_naiv.py", line 47, in __main__.C_mesh
+Failed example:
+    C_mesh(0, 1, 0, 1, 2, 2)
+Expected:
+    array([[0. +1j , 1+1j ],
+           [0. +1j, 0+1j]])
+Got:
+    array([[0. +1.j , 0.5+1.j ],
+           [0. +0.5j, 0.5+0.5j]])
+**********************************************************************
+1 items had failures:
+   1 of   1 in __main__.C_mesh
+***Test Failed*** 1 failures.
+
+ipdb> 
