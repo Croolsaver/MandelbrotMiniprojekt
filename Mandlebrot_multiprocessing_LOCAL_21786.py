@@ -164,14 +164,6 @@ if __name__ == '__main__':
     #M = np.reshape(result.get(), (p_re, p_im))
     M = result.get()
     time_taken = time.time() - t_start
-<<<<<<< HEAD
     #Plot mandelbrot_set
     print(f"Time taken: {time_taken:.4f} s")
-=======
-
-        
-       
-    #Plot mandelbrot_set
-    print("hej")
->>>>>>> 9274ef9d1f72c183335f63f22eacd6ed55a1074c
     plt.pcolormesh(np.linspace(re_start,re_stop,p_re),np.linspace(im_start,im_stop,p_im),M,cmap=plt.cm.hot)

@@ -55,26 +55,25 @@ def iota_vec(tolerance, iter_max, c_vec):
 def M_map(Iter, iter_max):
     return Iter/iter_max
 
-def calculate_M_mp(n_processors):
-    pool = mp.Pool(processes=n_processors)
+C=C_mesh(re_start,re_stop,im_start,im_stop,p_re,p_im)
+
+
+
+if __name__ == '__main__':
+    t_start = time.time()
+    pool = mp.Pool(processes=cpu_count)
+    #iota_partial = partial(iota, tolerance, iter_max)
+    #result = pool.map_async(iota_partial, C.flatten())
     iota_partial = partial(iota_vec, tolerance, iter_max)
     result = pool.map_async(iota_partial, C)
     pool.close()
     pool.join()
-    return result.get()
+    #M = np.reshape(result.get(), (p_re, p_im))
+    M = result.get()
+    time_taken = time.time() - t_start
 
-C=C_mesh(re_start,re_stop,im_start,im_stop,p_re,p_im)
 
-if __name__ == '__main__':
-    times = np.zeros(cpu_count)
-    for i in range(cpu_count):
-        t_start = time.time()
-        calculate_M_mp(i+1)
-        times[i] = time.time() - t_start
-<<<<<<< HEAD
-
-=======
-        print ("Time is for {} core(s) is {}".format(i+1,times[i]))
->>>>>>> 9274ef9d1f72c183335f63f22eacd6ed55a1074c
-    plt.plot(range(1,cpu_count+1), times)
-
+        
+       
+#Plot mandelbrot_set
+plt.pcolormesh(np.linspace(re_start,re_stop,p_re),np.linspace(im_start,im_stop,p_im),M,cmap=plt.cm.hot)

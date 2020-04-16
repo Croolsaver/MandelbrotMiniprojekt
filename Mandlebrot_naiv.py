@@ -6,7 +6,11 @@ Created on Mon Apr  6 10:08:11 2020
 """
 import numpy as np
 import matplotlib.pyplot as plt
+<<<<<<< HEAD
 import matplotlib.cm as cm
+=======
+import time
+>>>>>>> 9274ef9d1f72c183335f63f22eacd6ed55a1074c
 #Initialization
 RE_INTERVAL = [-2.0, 1.0]
 IM_INTERVAL = [-1.5, 1.5]
@@ -169,6 +173,7 @@ if __name__ == "__main__":
     import doctest
     doctest.testmod()
 
+<<<<<<< HEAD
 C_MESH = c_mesh(RE_INTERVAL, IM_INTERVAL, P_RE, P_IM)
 m_mesh_matrix = np.zeros((P_RE, P_IM))
 for m in range(P_RE):
@@ -177,6 +182,20 @@ for m in range(P_RE):
         m_mesh_matrix[m, n] = m_map(iteration, ITER_MAX)
 
 
+=======
+time_start=time.time()
+C=C_mesh(re_start,re_stop,im_start,im_stop,p_re,p_im)
+M=np.zeros((p_re,p_im))
+for m in range(p_re):
+    for n in range(p_im):
+        Iter = iota(C[m,n],tolerance,iter_max)
+        M[m,n]=M_map(Iter,iter_max)
+        
+time_exec=time.time()-time_start       
+
+#Print execution time
+print(time_exec)
+>>>>>>> 9274ef9d1f72c183335f63f22eacd6ed55a1074c
 #Plot mandelbrot_set
 RE_VALUES = np.linspace(*RE_INTERVAL, P_RE)
 IM_VALUES = np.linspace(*IM_INTERVAL, P_IM)
