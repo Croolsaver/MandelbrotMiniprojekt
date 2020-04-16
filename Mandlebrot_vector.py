@@ -16,8 +16,8 @@ im_stop = 1.5
 iter_max = 100
 
 tolerance = 2
-p_re = 500
-p_im = 500
+p_re = 1000
+p_im = 1000
 
 
 
@@ -123,6 +123,6 @@ index = iota_vector(C, tolerance, iter_max)
 time_exec=time.time()-time_start  
 
 #Print execution time
-print(time_exec)
+print (f"time taken: {time_exec:.4f}")
 #Plot mandelbrot_set
 plt.pcolormesh(np.linspace(re_start,re_stop,p_re),np.linspace(im_start,im_stop,p_im),index,cmap=plt.cm.hot)

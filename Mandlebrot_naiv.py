@@ -7,8 +7,12 @@ Created on Mon Apr  6 10:08:11 2020
 import numpy as np
 import matplotlib.pyplot as plt
 <<<<<<< HEAD
+<<<<<<< HEAD
 import matplotlib.cm as cm
 =======
+=======
+import matplotlib.cm as cm
+>>>>>>> 26fc909da41b52fabac142be464911779f4327e0
 import time
 >>>>>>> 9274ef9d1f72c183335f63f22eacd6ed55a1074c
 #Initialization
@@ -174,12 +178,17 @@ if __name__ == "__main__":
     doctest.testmod()
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 26fc909da41b52fabac142be464911779f4327e0
 C_MESH = c_mesh(RE_INTERVAL, IM_INTERVAL, P_RE, P_IM)
 m_mesh_matrix = np.zeros((P_RE, P_IM))
 for m in range(P_RE):
     for n in range(P_IM):
         iteration = iota(C_MESH[m, n], TOLERANCE, ITER_MAX)
         m_mesh_matrix[m, n] = m_map(iteration, ITER_MAX)
+<<<<<<< HEAD
 
 
 =======
@@ -196,6 +205,12 @@ time_exec=time.time()-time_start
 #Print execution time
 print(time_exec)
 >>>>>>> 9274ef9d1f72c183335f63f22eacd6ed55a1074c
+=======
+      
+
+#Print execution time
+print (f"time taken: {time_exec:.4f}")
+>>>>>>> 26fc909da41b52fabac142be464911779f4327e0
 #Plot mandelbrot_set
 RE_VALUES = np.linspace(*RE_INTERVAL, P_RE)
 IM_VALUES = np.linspace(*IM_INTERVAL, P_IM)

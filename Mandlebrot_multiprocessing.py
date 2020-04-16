@@ -163,15 +163,21 @@ if __name__ == '__main__':
     pool.join()
     #M = np.reshape(result.get(), (p_re, p_im))
     M = result.get()
+<<<<<<< HEAD
     time_taken = time.time() - t_start
 <<<<<<< HEAD
     #Plot mandelbrot_set
     print(f"Time taken: {time_taken:.4f} s")
 =======
+=======
+    time_exec = time.time() - t_start
+>>>>>>> 26fc909da41b52fabac142be464911779f4327e0
 
-        
-       
     #Plot mandelbrot_set
+<<<<<<< HEAD
     print("hej")
 >>>>>>> 9274ef9d1f72c183335f63f22eacd6ed55a1074c
+=======
+    print (f"time taken: {time_exec:.4f}")
+>>>>>>> 26fc909da41b52fabac142be464911779f4327e0
     plt.pcolormesh(np.linspace(re_start,re_stop,p_re),np.linspace(im_start,im_stop,p_im),M,cmap=plt.cm.hot)
