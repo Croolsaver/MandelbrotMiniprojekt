@@ -70,10 +70,8 @@ if __name__ == '__main__':
     pool.join()
     #M = np.reshape(result.get(), (p_re, p_im))
     M = result.get()
-    time_taken = time.time() - t_start
+    time_exec = time.time() - t_start
 
-        
-       
     #Plot mandelbrot_set
-    print("hej")
+    print (f"time taken: {time_exec:.4f}")
     plt.pcolormesh(np.linspace(re_start,re_stop,p_re),np.linspace(im_start,im_stop,p_im),M,cmap=plt.cm.hot)
