@@ -72,7 +72,6 @@ if __name__ == '__main__':
     M = result.get()
     time_taken = time.time() - t_start
 
-
         
        
     #Plot mandelbrot_set
