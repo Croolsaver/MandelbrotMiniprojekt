@@ -72,5 +72,5 @@ if __name__ == '__main__':
         calculate_M_mp(i+1)
         times[i] = time.time() - t_start
 
-plt.plot(range(1,cpu_count+1), times)
+    plt.plot(range(1,cpu_count+1), times)
 
