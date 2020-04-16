@@ -75,5 +75,6 @@ if __name__ == '__main__':
 
         
        
-#Plot mandelbrot_set
-plt.pcolormesh(np.linspace(re_start,re_stop,p_re),np.linspace(im_start,im_stop,p_im),M,cmap=plt.cm.hot)
+    #Plot mandelbrot_set
+    print("hej")
+    plt.pcolormesh(np.linspace(re_start,re_stop,p_re),np.linspace(im_start,im_stop,p_im),M,cmap=plt.cm.hot)

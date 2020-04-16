@@ -6,6 +6,7 @@ Created on Mon Apr  6 10:08:11 2020
 """
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 #Initialization
 re_start = -2.0
 re_stop = 1.0
@@ -169,6 +170,7 @@ if __name__ == "__main__":
     import doctest
     doctest.testmod()
 
+time_start=time.time()
 C=C_mesh(re_start,re_stop,im_start,im_stop,p_re,p_im)
 M=np.zeros((p_re,p_im))
 for m in range(p_re):
@@ -176,6 +178,9 @@ for m in range(p_re):
         Iter = iota(C[m,n],tolerance,iter_max)
         M[m,n]=M_map(Iter,iter_max)
         
-       
+time_exec=time.time()-time_start       
+
+#Print execution time
+print(time_exec)
 #Plot mandelbrot_set
 plt.pcolormesh(np.linspace(re_start,re_stop,p_re),np.linspace(im_start,im_stop,p_im),M,cmap=plt.cm.hot)
