@@ -4,17 +4,11 @@ Created on Mon Apr  6 10:08:11 2020
 
 @authors: Daniel Van Diepen & Dennis Grøndahl Andersen
 """
+import time
 import numpy as np
 import matplotlib.pyplot as plt
-<<<<<<< HEAD
-<<<<<<< HEAD
 import matplotlib.cm as cm
-=======
-=======
-import matplotlib.cm as cm
->>>>>>> 26fc909da41b52fabac142be464911779f4327e0
-import time
->>>>>>> 9274ef9d1f72c183335f63f22eacd6ed55a1074c
+
 #Initialization
 RE_INTERVAL = [-2.0, 1.0]
 IM_INTERVAL = [-1.5, 1.5]
@@ -177,40 +171,18 @@ if __name__ == "__main__":
     import doctest
     doctest.testmod()
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 26fc909da41b52fabac142be464911779f4327e0
+TIME_START = time.time()
 C_MESH = c_mesh(RE_INTERVAL, IM_INTERVAL, P_RE, P_IM)
 m_mesh_matrix = np.zeros((P_RE, P_IM))
 for m in range(P_RE):
     for n in range(P_IM):
         iteration = iota(C_MESH[m, n], TOLERANCE, ITER_MAX)
         m_mesh_matrix[m, n] = m_map(iteration, ITER_MAX)
-<<<<<<< HEAD
 
-
-=======
-time_start=time.time()
-C=C_mesh(re_start,re_stop,im_start,im_stop,p_re,p_im)
-M=np.zeros((p_re,p_im))
-for m in range(p_re):
-    for n in range(p_im):
-        Iter = iota(C[m,n],tolerance,iter_max)
-        M[m,n]=M_map(Iter,iter_max)
-        
-time_exec=time.time()-time_start       
-
+TIME_EXEC = time.time()-TIME_START
 #Print execution time
-print(time_exec)
->>>>>>> 9274ef9d1f72c183335f63f22eacd6ed55a1074c
-=======
-      
+print(f"Time taken: {TIME_EXEC:.4f}")
 
-#Print execution time
-print (f"time taken: {time_exec:.4f}")
->>>>>>> 26fc909da41b52fabac142be464911779f4327e0
 #Plot mandelbrot_set
 RE_VALUES = np.linspace(*RE_INTERVAL, P_RE)
 IM_VALUES = np.linspace(*IM_INTERVAL, P_IM)
