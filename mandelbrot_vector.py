@@ -8,8 +8,9 @@ import time
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
+import h5py
 
-#Initialization
+# Initialization
 RE_INTERVAL = [-2.0, 1.0]
 IM_INTERVAL = [-1.5, 1.5]
 
@@ -20,10 +21,10 @@ P_RE = 1000
 P_IM = 1000
 
 
-
 def c_mesh(re_interval, im_interval, p_re, p_im):
     """
-    Generates mesh of p evenly spaced complex points in the intervals [re_start].....
+    Generates mesh of p evenly spaced complex points in the intervals
+    [re_interval[0], re_interval[1]], [im_interval[0], im_interval[1]]
 
     Parameters
     ----------
@@ -82,12 +83,14 @@ def c_mesh(re_interval, im_interval, p_re, p_im):
     if p_re <= 1 or p_im <= 1:
         raise ValueError("p_re and p_im must be greater than 1")
     if np.any(np.iscomplex((re_start, re_stop, im_start, im_stop))):
-        raise ValueError("re_start, re_stop, im_start, im_stop cannot be complex")
+        raise ValueError("re_start, re_stop, im_start, im_stop cannot be "
+                         "complex")
     c_re_row = np.linspace(np.real(re_start), np.real(re_stop), p_re)
     c_re = np.tile(c_re_row, (p_re, 1))
     c_im_col = np.linspace(np.real(im_stop), np.real(im_start), p_im)
     c_im = np.tile(c_im_col, (p_re, 1)).T
     return c_re+1j*c_im
+
 
 def iota(complex_point, tolerance, iter_max):
     """
@@ -137,9 +140,10 @@ def iota(complex_point, tolerance, iter_max):
             return i
     return iter_max
 
-def iota_vector(c_mesh, tolerance, iter_max, p_re, p_im):
+
+def iota_vector(complex_mesh, tolerance, iter_max, p_re, p_im):
     """
-    
+
 
     Parameters
     ----------
@@ -160,37 +164,38 @@ def iota_vector(c_mesh, tolerance, iter_max, p_re, p_im):
         DESCRIPTION.
 
 
-    >>> [iota_vector(0, 2, n) for n in range(0, 100, 10)]
-    [0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+    >>> [iota_vector(0, 2, n, 1, 1) for n in range(20, 120, 20)]
+    [array([[1.]]), array([[1.]]), array([[1.]]), array([[1.]]), array([[1.]])]
 
-    >>> [iota_vector(c, 2, 100) for c in np.linspace(0, 1, 11)]
-    [100, 100, 100, 12, 7, 5, 4, 3, 3, 3, 3]
+    >>> iota_vector(np.linspace(0, 1, 11), 2, 100, 1, 11)
+    array([[1.  , 1.  , 1.  , 0.12, 0.07, 0.05, 0.04, 0.03, 0.03, 0.03, 0.03]])
 
-    >>> iota_vector(1+1j, 2, 100)
-    2
+    >>> iota_vector(np.array([1+1j, 0+2j]), 2, 100, 1, 2)
+    array([[0.02, 0.02]])
 
-    >>> [iota_vector(n+1, n, 100) for n in range(1,6)]
-    [1, 1, 1, 1, 1]
+    >>> [iota_vector(n+1, n, 100, 1, 1) for n in range(1,6)]
+    [array([[0.01]]), array([[0.01]]), array([[0.01]]), array([[0.01]]), \
+array([[0.01]])]
 
-    >>> iota_vector(1+1j, 1+2j, 100)
-    Traceback (most recent call last):
-        ...
-    TypeError: '>' not supported between instances of 'float' and 'complex'
+    >>> iota_vector(np.array([[1,2],[3,4]]), 2, 100, 2, 2)
+    array([[0.03, 0.02],
+           [0.01, 0.01]])
 
-    >>> iota_vector(1+1j, 2, 100.5)
+    >>> iota_vector(1+1j, 2, 100.5, 1, 1)
     Traceback (most recent call last):
         ...
     TypeError: 'float' object cannot be interpreted as an integer
     """
     z_current = np.zeros((p_re, p_im, iter_max), dtype=complex)
     truth_table = np.zeros((p_re, p_im, iter_max), dtype=int)
-    truth_table[:,:,0] = iter_max
+    truth_table[:, :, 0] = iter_max
     for i in range(1, iter_max):
-        z_current[:,:,i] = z_current[:,:,i-1]**2 + c_mesh
-        tt_local  = np.abs(z_current[:,:,i]) > tolerance
-        truth_table[:,:,i] = tt_local*i + np.logical_not(tt_local)*iter_max
+        z_current[:, :, i] = z_current[:, :, i-1]**2 + complex_mesh
+        tt_local = np.abs(z_current[:, :, i]) > tolerance
+        truth_table[:, :, i] = tt_local*i + np.logical_not(tt_local)*iter_max
     index = np.min(truth_table, axis=2)
     return index/iter_max
+
 
 def m_map(iter_stop, iter_max):
     """
@@ -218,19 +223,28 @@ def m_map(iter_stop, iter_max):
     """
     return iter_stop/iter_max
 
-#if __name__ == "__main__":
-#    import doctest
-#    doctest.testmod()
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
 
 TIME_START = time.time()
 C_MESH = c_mesh(RE_INTERVAL, IM_INTERVAL, P_RE, P_IM)
 M_MESH = iota_vector(C_MESH, TOLERANCE, ITER_MAX, P_RE, P_IM)
 
 TIME_EXEC = time.time()-TIME_START
-#Print execution time
+# Print execution time
 print(f"Time taken: {TIME_EXEC:.4f}")
 
-#Plot mandelbrot_set
+# Plot mandelbrot_set
 RE_VALUES = np.linspace(*RE_INTERVAL, P_RE)
 IM_VALUES = np.linspace(*IM_INTERVAL, P_IM)
 plt.pcolormesh(RE_VALUES, IM_VALUES, M_MESH, cmap=cm.get_cmap("hot"))
+# plt.savefig("mandelbrot_vector.pdf")
+
+with h5py.File("mandelbrot_vector.hdf5", "w") as data_file:
+    data_file.create_dataset("m_mesh", data=M_MESH)
+    data_file.create_dataset("re_interval", data=RE_INTERVAL)
+    data_file.create_dataset("im_interval", data=IM_INTERVAL)
+    data_file.create_dataset("tolerance", data=TOLERANCE)
+    data_file.create_dataset("iter_max", data=ITER_MAX)

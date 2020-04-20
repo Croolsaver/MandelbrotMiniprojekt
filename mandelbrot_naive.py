@@ -8,22 +8,23 @@ import time
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
+import h5py
 
-#Initialization
+# Initialization
 RE_INTERVAL = [-2.0, 1.0]
 IM_INTERVAL = [-1.5, 1.5]
 
 ITER_MAX = 100
 
 TOLERANCE = 2
-P_RE = 500
-P_IM = 500
-
+P_RE = 1000
+P_IM = 1000
 
 
 def c_mesh(re_interval, im_interval, p_re, p_im):
     """
-    Generates mesh of p evenly spaced complex points in the intervals [re_start].....
+    Generates mesh of p evenly spaced complex points in the intervals
+    [re_interval[0], re_interval[1]], [im_interval[0], im_interval[1]]
 
     Parameters
     ----------
@@ -82,7 +83,8 @@ def c_mesh(re_interval, im_interval, p_re, p_im):
     if p_re <= 1 or p_im <= 1:
         raise ValueError("p_re and p_im must be greater than 1")
     if np.any(np.iscomplex((re_start, re_stop, im_start, im_stop))):
-        raise ValueError("re_start, re_stop, im_start, im_stop cannot be complex")
+        raise ValueError("re_start, re_stop, im_start, im_stop cannot be "
+                         "complex")
     c_re = np.zeros((p_re, p_im))
     c_im = np.zeros((p_re, p_im))
     re_stepsize = (re_stop-re_start)/(p_re-1)
@@ -92,6 +94,7 @@ def c_mesh(re_interval, im_interval, p_re, p_im):
     for k in range(p_im):
         c_im[k, :] = im_stop-k*im_stepsize
     return c_re+1j*c_im
+
 
 def iota(complex_point, tolerance, iter_max):
     """
@@ -141,6 +144,7 @@ def iota(complex_point, tolerance, iter_max):
             return i
     return iter_max
 
+
 def m_map(iter_stop, iter_max):
     """
 
@@ -167,6 +171,7 @@ def m_map(iter_stop, iter_max):
     """
     return iter_stop/iter_max
 
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
@@ -180,10 +185,18 @@ for m in range(P_RE):
         m_mesh_matrix[m, n] = m_map(iteration, ITER_MAX)
 
 TIME_EXEC = time.time()-TIME_START
-#Print execution time
+# Print execution time
 print(f"Time taken: {TIME_EXEC:.4f}")
 
-#Plot mandelbrot_set
+# Plot mandelbrot_set
 RE_VALUES = np.linspace(*RE_INTERVAL, P_RE)
 IM_VALUES = np.linspace(*IM_INTERVAL, P_IM)
 plt.pcolormesh(RE_VALUES, IM_VALUES, m_mesh_matrix, cmap=cm.get_cmap("hot"))
+plt.savefig("mandelbrot_naive.pdf")
+
+with h5py.File("mandelbrot_naive.hdf5", "w") as data_file:
+    data_file.create_dataset("m_mesh", data=m_mesh_matrix)
+    data_file.create_dataset("re_interval", data=RE_INTERVAL)
+    data_file.create_dataset("im_interval", data=IM_INTERVAL)
+    data_file.create_dataset("tolerance", data=TOLERANCE)
+    data_file.create_dataset("iter_max", data=ITER_MAX)
