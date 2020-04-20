@@ -239,8 +239,11 @@ print(f"Time taken: {TIME_EXEC:.4f}")
 # Plot mandelbrot_set
 RE_VALUES = np.linspace(*RE_INTERVAL, P_RE)
 IM_VALUES = np.linspace(*IM_INTERVAL, P_IM)
+plt.figure(figsize=(10,10))
 plt.pcolormesh(RE_VALUES, IM_VALUES, M_MESH, cmap=cm.get_cmap("hot"))
-# plt.savefig("mandelbrot_vector.pdf")
+plt.xlabel(r"$\mathfrak{R}[c]$")
+plt.ylabel(r"$\mathfrak{I}[c]$")
+plt.savefig("mandelbrot_vector.png", dpi=300)
 
 with h5py.File("mandelbrot_vector.hdf5", "w") as data_file:
     data_file.create_dataset("m_mesh", data=M_MESH)
