@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr  6 10:08:11 2020
+Created on Mon Apr  6 10:08:11 2020.
 
 @authors: Daniel Van Diepen & Dennis Grøndahl Andersen
 """
@@ -23,19 +23,15 @@ P_IM = 1000
 
 def c_mesh(re_interval, im_interval, p_re, p_im):
     """
-    Generates mesh of p evenly spaced complex points in the intervals
-    [re_interval[0], re_interval[1]], [im_interval[0], im_interval[1]]
+    Generate mesh of p evenly spaced complex points in the intervals
+    [re_interval[0], re_interval[1]], [im_interval[0], im_interval[1]].
 
     Parameters
     ----------
-    re_start : float
-        Start of real interval.
-    re_stop : float
-        End of real interval.
-    im_start : float
-        Start of imaginary interval.
-    im_stop : float
-        End of imaginary interval.
+    re_interval : float, float
+        Start and end of real interval.
+    im_interval : float, float
+        Start and end of imaginary interval.
     p_re : integer > 1
         Number of points in the real interval.
     p_im : integer > 1
@@ -43,8 +39,9 @@ def c_mesh(re_interval, im_interval, p_re, p_im):
 
     Returns
     -------
-    TYPE
-        DESCRIPTION.
+    complex 2d-array
+        Mesh of evenly spaced complex points in the specified intervals.
+
 
     >>> c_mesh([0, 1], [0, 1], 2, 2)
     array([[0.+1.j, 1.+1.j],
@@ -92,76 +89,28 @@ def c_mesh(re_interval, im_interval, p_re, p_im):
     return c_re+1j*c_im
 
 
-def iota(complex_point, tolerance, iter_max):
-    """
-    Calculates Mandelbrot iota function
-
-    Parameters
-    ----------
-    c : TYPE
-        DESCRIPTION.
-    tolerance : TYPE
-        DESCRIPTION.
-    iter_max : TYPE
-        DESCRIPTION.
-
-    Returns
-    -------
-    TYPE
-        DESCRIPTION.
-
-
-    >>> [iota(0, 2, n) for n in range(0, 100, 10)]
-    [0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
-
-    >>> [iota(c, 2, 100) for c in np.linspace(0, 1, 11)]
-    [100, 100, 100, 12, 7, 5, 4, 3, 3, 3, 3]
-
-    >>> iota(1+1j, 2, 100)
-    2
-
-    >>> [iota(n+1, n, 100) for n in range(1,6)]
-    [1, 1, 1, 1, 1]
-
-    >>> iota(1+1j, 1+2j, 100)
-    Traceback (most recent call last):
-        ...
-    TypeError: '>' not supported between instances of 'float' and 'complex'
-
-    >>> iota(1+1j, 2, 100.5)
-    Traceback (most recent call last):
-        ...
-    TypeError: 'float' object cannot be interpreted as an integer
-    """
-    z_current = 0+0j
-    for i in range(1, iter_max):
-        z_current = z_current**2 + complex_point
-        if abs(z_current) > tolerance:
-            return i
-    return iter_max
-
-
 def iota_vector(complex_mesh, tolerance, iter_max, p_re, p_im):
     """
-
+    Calculates the complex mapping which generates the mandelbrot set.
 
     Parameters
     ----------
-    C : TYPE
-        DESCRIPTION.
-    tolerance : TYPE
-        DESCRIPTION.
-    iter_max : TYPE
-        DESCRIPTION.
-    p_re : TYPE
-        DESCRIPTION.
-    p_im : TYPE
-        DESCRIPTION.
+    C : complex 2d-array
+        c-mesh of evenly spaced complex numbers.
+    tolerance : float
+        Threshold z should stay below.
+    iter_max : integer
+        Maximum amount of iterations.
+    p_re : integer
+        Number of values in the real dimension.
+    p_im : integer
+        Number of values in the imaginary dimension.
 
     Returns
     -------
-    TYPE
-        DESCRIPTION.
+    2d-array of integers
+        The matrix M of values in the mandelbrot set, normalized for the max
+        number of iterations.
 
 
     >>> [iota_vector(0, 2, n, 1, 1) for n in range(20, 120, 20)]
@@ -197,33 +146,6 @@ array([[0.01]])]
     return index/iter_max
 
 
-def m_map(iter_stop, iter_max):
-    """
-
-    Parameters
-    ----------
-    Iter : TYPE
-        DESCRIPTION.
-    iter_max : TYPE
-        DESCRIPTION.
-
-    Returns
-    -------
-    TYPE
-        DESCRIPTION.
-
-    >>> m_map(1, 2)
-    0.5
-
-    >>> m_map(1, 0)
-    Traceback (most recent call last):
-        ...
-    ZeroDivisionError: division by zero
-
-    """
-    return iter_stop/iter_max
-
-
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
@@ -239,7 +161,7 @@ print(f"Time taken: {TIME_EXEC:.4f}")
 # Plot mandelbrot_set
 RE_VALUES = np.linspace(*RE_INTERVAL, P_RE)
 IM_VALUES = np.linspace(*IM_INTERVAL, P_IM)
-plt.figure(figsize=(10,10))
+plt.figure(figsize=(10, 10))
 plt.pcolormesh(RE_VALUES, IM_VALUES, M_MESH, cmap=cm.get_cmap("hot"))
 plt.xlabel(r"$\mathfrak{R}[c]$")
 plt.ylabel(r"$\mathfrak{I}[c]$")

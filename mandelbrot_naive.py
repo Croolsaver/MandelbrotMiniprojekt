@@ -28,14 +28,10 @@ def c_mesh(re_interval, im_interval, p_re, p_im):
 
     Parameters
     ----------
-    re_start : float
-        Start of real interval.
-    re_stop : float
-        End of real interval.
-    im_start : float
-        Start of imaginary interval.
-    im_stop : float
-        End of imaginary interval.
+    re_interval : float, float
+        Start and end of real interval.
+    im_interval : float, float
+        Start and end of imaginary interval.
     p_re : integer > 1
         Number of points in the real interval.
     p_im : integer > 1
@@ -102,17 +98,17 @@ def iota(complex_point, tolerance, iter_max):
 
     Parameters
     ----------
-    c : TYPE
-        DESCRIPTION.
-    tolerance : TYPE
-        DESCRIPTION.
-    iter_max : TYPE
-        DESCRIPTION.
+    c : complex
+        The complex number for which we wish to calculate iota.
+    tolerance : float
+        Threshold z should stay below.
+    iter_max : integer
+        Maximum amount of iterations.
 
     Returns
     -------
-    TYPE
-        DESCRIPTION.
+    integer
+        Number of iterations for z to surpass the threshold.
 
 
     >>> [iota(0, 2, n) for n in range(0, 100, 10)]
@@ -147,18 +143,20 @@ def iota(complex_point, tolerance, iter_max):
 
 def m_map(iter_stop, iter_max):
     """
+    Maps iota to the interval [0,1] by dividing with iter_max.
+
 
     Parameters
     ----------
-    Iter : TYPE
-        DESCRIPTION.
-    iter_max : TYPE
-        DESCRIPTION.
+    iter_stop : integer
+        The iteration iota stopped at.
+    iter_max : integer
+        The max amount of iterations in iota.
 
     Returns
     -------
-    TYPE
-        DESCRIPTION.
+    float
+        Normalized M in interval [0,1].
 
     >>> m_map(1, 2)
     0.5

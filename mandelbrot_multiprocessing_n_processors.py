@@ -23,6 +23,8 @@ TOLERANCE = 2
 P_RE = 1000
 P_IM = 1000
 
+N_AVERAGE = 10
+
 
 def c_mesh(re_interval, im_interval, p_re, p_im):
     """
@@ -104,17 +106,17 @@ def iota(complex_point, tolerance, iter_max):
 
     Parameters
     ----------
-    c : TYPE
-        DESCRIPTION.
-    tolerance : TYPE
-        DESCRIPTION.
-    iter_max : TYPE
-        DESCRIPTION.
+    c : complex
+        The complex number for which we wish to calculate iota.
+    tolerance : float
+        Threshold z should stay below.
+    iter_max : integer
+        Maximum amount of iterations.
 
     Returns
     -------
-    TYPE
-        DESCRIPTION.
+    integer
+        Number of iterations for z to surpass the threshold.
 
 
     >>> [iota(0, 2, n) for n in range(0, 100, 10)]
@@ -153,17 +155,17 @@ def iota_vec(tolerance, iter_max, c_vec):
 
     Parameters
     ----------
-    tolerance : TYPE
-        DESCRIPTION.
-    iter_max : TYPE
-        DESCRIPTION.
-    c_vec : TYPE
-        DESCRIPTION.
+    tolerance : float
+        Threshold z should stay below.
+    iter_max : integer
+        Maximum amount of iterations.
+    c_vec : list of complex
+        list of complex numbers to calculate mandelbrot values for.
 
     Returns
     -------
-    TYPE
-        DESCRIPTION.
+    list of float
+        1d-numpy array of normalized M.
 
     >>> iota_vec(2, 100, range(10, 110, 10))
     array([0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01])
@@ -181,13 +183,13 @@ def calculate_m_np(n_processors, tolerance, iter_max, complex_mesh):
 
     Parameters
     ----------
-    n_processors : TYPE
-        DESCRIPTION.
+    n_processors : integer
+        Number of processors to use in the multiprocessing implementation.
 
     Returns
     -------
-    TYPE
-        DESCRIPTION.
+    2d-numpy array of float
+        Mandelbrot set values corresponding to the points in complex_mesh.
 
     """
     pool = mp.Pool(processes=n_processors)
@@ -206,13 +208,16 @@ if __name__ == '__main__':
     times = np.zeros(CPU_COUNT)
     C_MESH = c_mesh(RE_INTERVAL, IM_INTERVAL, P_RE, P_IM)
     for j in range(CPU_COUNT):
-        T_START = time.time()
-        calculate_m_np(j+1, TOLERANCE, ITER_MAX, C_MESH)
-        times[j] = time.time() - T_START
+        t_start = np.zeros(N_AVERAGE)
+        t_elapsed = np.zeros(N_AVERAGE)
+        for n in range(N_AVERAGE):
+            t_start[n] = time.time()
+            calculate_m_np(j+1, TOLERANCE, ITER_MAX, C_MESH)
+            t_elapsed[n] = time.time() - t_start[n]
+        times[j] = np.mean(t_elapsed)
         print("Time is for {} core(s) is {}".format(j+1, times[j]))
-    plt.plot(range(1, CPU_COUNT+1), times)
+    plt.bar(range(1, CPU_COUNT+1), times)
     plt.title("Mandelbrot set multiprocessing")
     plt.xlabel("# processors")
     plt.ylabel("time (s)")
     plt.savefig("mandelbrot_multiprocessing_n_processors.pdf")
-    

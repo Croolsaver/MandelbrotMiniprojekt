@@ -33,14 +33,10 @@ def c_mesh(re_interval, im_interval, p_re, p_im):
 
     Parameters
     ----------
-    re_start : float
-        Start of real interval.
-    re_stop : float
-        End of real interval.
-    im_start : float
-        Start of imaginary interval.
-    im_stop : float
-        End of imaginary interval.
+    re_interval : float, float
+        Start and end of real interval.
+    im_interval : float, float
+        Start and end of imaginary interval.
     p_re : integer > 1
         Number of points in the real interval.
     p_im : integer > 1
@@ -106,17 +102,17 @@ def iota(complex_point, tolerance, iter_max):
 
     Parameters
     ----------
-    c : TYPE
-        DESCRIPTION.
-    tolerance : TYPE
-        DESCRIPTION.
-    iter_max : TYPE
-        DESCRIPTION.
+    c : complex
+        The complex number for which we wish to calculate iota.
+    tolerance : float
+        Threshold z should stay below.
+    iter_max : integer
+        Maximum amount of iterations.
 
     Returns
     -------
-    TYPE
-        DESCRIPTION.
+    integer
+        Number of iterations for z to surpass the threshold.
 
 
     >>> [iota(0, 2, n) for n in range(0, 100, 10)]
@@ -155,17 +151,17 @@ def iota_vec(tolerance, iter_max, c_vec):
 
     Parameters
     ----------
-    tolerance : TYPE
-        DESCRIPTION.
-    iter_max : TYPE
-        DESCRIPTION.
-    c_vec : TYPE
-        DESCRIPTION.
+    tolerance : float
+        Threshold z should stay below.
+    iter_max : integer
+        Maximum amount of iterations.
+    c_vec : list of complex
+        list of complex numbers to calculate mandelbrot values for.
 
     Returns
     -------
-    TYPE
-        DESCRIPTION.
+    list of float
+        1d-numpy array of normalized M.
 
     >>> iota_vec(2, 100, range(10, 110, 10))
     array([0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01])
