@@ -15,7 +15,7 @@ mandelbrot_multiprocessing_n_processors.py
 - A script to illustrate the time taken with n processors is found in `mandelbrot_multiprocessing_n_processors.py`
 
 ## Accompanying Material
-For each of the scripts, the output files are included with the same name as the corresponding script. E.g. for `mandelbrot_naive.py`, see `mandelbrot_naive.png` and `mandelbrot_naive.hdf5`
+For each of the scripts, the output files are included in the folder `output` with the same name as the corresponding script. E.g. for `mandelbrot_naive.py`, see `mandelbrot_naive.png` and `mandelbrot_naive.hdf5`
 
 ## Prerequesites
 The following Python packages are needed to run the scripts
