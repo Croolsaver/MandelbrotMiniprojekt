@@ -165,9 +165,9 @@ plt.figure(figsize=(10, 10))
 plt.pcolormesh(RE_VALUES, IM_VALUES, M_MESH, cmap=cm.get_cmap("hot"))
 plt.xlabel(r"$\mathfrak{R}[c]$")
 plt.ylabel(r"$\mathfrak{I}[c]$")
-plt.savefig("mandelbrot_vector.png", dpi=300)
+plt.savefig("output/mandelbrot_vector.png", dpi=300)
 
-with h5py.File("mandelbrot_vector.hdf5", "w") as data_file:
+with h5py.File("output/mandelbrot_vector.hdf5", "w") as data_file:
     data_file.create_dataset("m_mesh", data=M_MESH)
     data_file.create_dataset("re_interval", data=RE_INTERVAL)
     data_file.create_dataset("im_interval", data=IM_INTERVAL)

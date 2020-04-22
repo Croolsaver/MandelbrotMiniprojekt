@@ -220,4 +220,4 @@ if __name__ == '__main__':
     plt.title("Mandelbrot set multiprocessing")
     plt.xlabel("# processors")
     plt.ylabel("time (s)")
-    plt.savefig("mandelbrot_multiprocessing_n_processors.pdf")
+    plt.savefig("output/mandelbrot_multiprocessing_n_processors.pdf")
