@@ -41,7 +41,7 @@ P_RE = 1000
 P_IM = 1000
 ```
 In the multiprocessing implementation, you can additionally change the amount of processors to your liking
-```
+```python
 CPU_COUNT = mp.cpu_count()
 ```
 
