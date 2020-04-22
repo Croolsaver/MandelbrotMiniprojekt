@@ -102,7 +102,7 @@ def iota(complex_point, tolerance, iter_max):
 
     Parameters
     ----------
-    c : complex
+    complex_point : complex
         The complex number for which we wish to calculate iota.
     tolerance : float
         Threshold z should stay below.

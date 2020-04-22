@@ -33,14 +33,10 @@ def c_mesh(re_interval, im_interval, p_re, p_im):
 
     Parameters
     ----------
-    re_start : float
-        Start of real interval.
-    re_stop : float
-        End of real interval.
-    im_start : float
-        Start of imaginary interval.
-    im_stop : float
-        End of imaginary interval.
+    re_interval : float, float
+        Start and end of real interval.
+    im_interval : float, float
+        Start and end of imaginary interval.
     p_re : integer > 1
         Number of points in the real interval.
     p_im : integer > 1
@@ -106,7 +102,7 @@ def iota(complex_point, tolerance, iter_max):
 
     Parameters
     ----------
-    c : complex
+    complex_point : complex
         The complex number for which we wish to calculate iota.
     tolerance : float
         Threshold z should stay below.

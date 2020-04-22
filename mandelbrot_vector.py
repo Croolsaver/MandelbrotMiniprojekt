@@ -95,7 +95,7 @@ def iota_vector(complex_mesh, tolerance, iter_max, p_re, p_im):
 
     Parameters
     ----------
-    C : complex 2d-array
+    complex_mesh : complex 2d-array
         c-mesh of evenly spaced complex numbers.
     tolerance : float
         Threshold z should stay below.
