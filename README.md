@@ -1,6 +1,8 @@
 # MandelbrotMiniprojekt
 Miniproject for numerical scientific computing Mattek6-4
 
+<img src="https://raw.githubusercontent.com/Croolsaver/MandelbrotMiniprojekt/master/output/mandelbrot_multiprocessing.png" width="50%">
+
 ## Included Scripts
 ```
 mandelbrot_naive.py
